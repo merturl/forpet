@@ -1,14 +1,14 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>
-      Ionic Blank
+      홈
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  
+  <p>Username:{{(profileData | async)?.username}}</p>
+  <p>Firstname:{{(profileData | async)?.firstname}}</p>
+  <p>Lastname:{{(profileData | async)?.lastname}}</p>
 </ion-content>
