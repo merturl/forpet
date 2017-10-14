@@ -25,7 +25,7 @@ export class ProfilePage {
   createProfile(){
     this.afAuth.authState.take(1).subscribe(auth => {
       this.afDatabase.object(`profile/${auth.uid}`).set(this.profile) //list().puh -> set key but object().set -> have not key
-      .then(()=>this.navCtrl.setRoot(HomePage));
+      .then(()=>this.navCtrl.pop());
     })
   }
 
