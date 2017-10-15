@@ -1,3 +1,4 @@
+import { ArduinoPage } from './../pages/arduino/arduino';
 import { ProfilePage } from './../pages/profile/profile';
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,7 +23,8 @@ import { RegisterPage } from './../pages/register/register';
     HomePage,
     LoginPage,
     RegisterPage,
-    ProfilePage
+    ProfilePage,
+    ArduinoPage
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,8 @@ import { RegisterPage } from './../pages/register/register';
     HomePage,
     LoginPage,
     RegisterPage,
-    ProfilePage
+    ProfilePage,
+    ArduinoPage
   ],
   providers: [
     StatusBar,

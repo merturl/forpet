@@ -1,6 +1,7 @@
+import { ArduinoPage } from './../arduino/arduino';
 import { ProfilePage } from './../profile/profile';
 import { Profile } from './../../models/profile';
-import { AngularFireDatabase} from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
@@ -20,16 +21,13 @@ export class HomePage {
   ionViewWillLoad(){
     this.afAuth.authState.take(1).subscribe(data =>{
       if(data && data.email && data.uid){
-        console.log(data.uid);
         this.toast.create({
           message: `Welcome to forPet, ${data.email}`,
           duration: 3000 //3sec
         }).present();
-        
         if(`profile/${data.uid}` === 'undefined'){
           this.navCtrl.push(ProfilePage);
         }else{
-          console.log(`profile/${data.uid}`);
           this.profileData = this.afDatabase.object(`profile/${data.uid}`).valueChanges();
         }
       }else{
@@ -39,6 +37,9 @@ export class HomePage {
         }).present();
       }
     });
+  }
+  addArduino(){
+    this.navCtrl.push(ArduinoPage);
   }
 
 }

@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RegisterPage } from './../register/register';
 import { AngularFireAuth } from "angularfire2/auth";
-
+import { LoadingController } from 'ionic-angular';
 /**
  * Generated class for the LoginPage page.
  *
@@ -19,17 +19,20 @@ import { AngularFireAuth } from "angularfire2/auth";
 })
 export class LoginPage {
 
-  user = {} as User
+  user = {} as User;
+  loading: any;
 
-  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
+    
   }
 
   async login(user: User){
     try {
-      const result = this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
-      if(result){
-        this.navCtrl.setRoot(HomePage);
-      }
+      this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then(authData => {
+        this.loading.dismiss();
+      });
+      this.loading = this.loadingCtrl.create();
+      this.loading.present();
     }catch (e){
       console.error(e);
     }
@@ -38,4 +41,5 @@ export class LoginPage {
   register(){
     this.navCtrl.push(RegisterPage);
   }
+
 }

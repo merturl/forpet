@@ -1,4 +1,3 @@
-import { HomePage } from './../home/home';
 import { Profile } from './../../models/profile';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Component } from '@angular/core';
