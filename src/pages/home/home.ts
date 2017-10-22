@@ -13,23 +13,29 @@ import { AngularFireAuth } from "angularfire2/auth";
 })
 export class HomePage {
 
-  profileData: Observable<Profile[]>;
+  profileData: Observable<Profile>;
   constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, private toast: ToastController, private afDatabase: AngularFireDatabase) {
 
   }
 
   ionViewWillLoad(){
+    console.log(this.afAuth.auth.signInWithCredential);
     this.afAuth.authState.take(1).subscribe(data =>{
       if(data && data.email && data.uid){
         this.toast.create({
           message: `Welcome to forPet, ${data.email}`,
           duration: 3000 //3sec
         }).present();
-        if(`profile/${data.uid}` === 'undefined'){
-          this.navCtrl.push(ProfilePage);
-        }else{
-          this.profileData = this.afDatabase.object(`profile/${data.uid}`).valueChanges();
-        }
+          this.profileData = this.afDatabase.object('profile').valueChanges();
+          this.profileData.subscribe(x=>{
+            if(typeof x[data.uid] === 'undefined'){
+              console.log(x[data.uid]);
+              this.navCtrl.push(ProfilePage);
+            }else{
+              console.log(x[data.uid]);
+              console.log(Object.keys[data.uid]);
+            }
+          }, error=>{console.log("asd")});
       }else{
         this.toast.create({
           message: `Could not find authentication details`,
@@ -38,8 +44,8 @@ export class HomePage {
       }
     });
   }
+
   addArduino(){
     this.navCtrl.push(ArduinoPage);
   }
-
 }

@@ -21,12 +21,8 @@ export class ArduinoPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ArduinoPage');
-    this.afAuth.authState.take(1).subscribe(data =>{
-      if(data && data.email && data.uid){
-        console.log(data.uid);
-      }
-    });
   }
+  
   signOut(){
     this.afAuth.auth.signOut();
   }
