@@ -9,6 +9,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFireDatabaseModule } from "angularfire2/database";
+import { HttpClientModule } from '@angular/common/http';
+// import { GooglePlus } from "@ionic-native/google-plus";
+
 // import { FirebaseObjectObservable  } from "angularfire2/database-deprecated"; 쓰이지 않음
 
 
@@ -16,6 +19,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from './../pages/login/login';
 import { RegisterPage } from './../pages/register/register';
+import { MessageServiceProvider } from '../providers/message-service/message-service';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ import { RegisterPage } from './../pages/register/register';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -45,7 +50,9 @@ import { RegisterPage } from './../pages/register/register';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    MessageServiceProvider
+    // GooglePlus
   ]
 })
 export class AppModule {}

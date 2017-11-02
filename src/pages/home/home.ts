@@ -1,3 +1,4 @@
+import { MessageServiceProvider } from './../../providers/message-service/message-service';
 import { ArduinoPage } from './../arduino/arduino';
 import { ProfilePage } from './../profile/profile';
 import { Profile } from './../../models/profile';
@@ -13,9 +14,10 @@ import { AngularFireAuth } from "angularfire2/auth";
 })
 export class HomePage {
 
+  messageList = [];
   profileData: Observable<Profile>;
-  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, private toast: ToastController, private afDatabase: AngularFireDatabase) {
-
+  constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, private toast: ToastController, private afDatabase: AngularFireDatabase, private messageService: MessageServiceProvider) {
+    this.getMessage();
   }
 
   ionViewWillLoad(){
@@ -47,5 +49,18 @@ export class HomePage {
 
   addArduino(){
     this.navCtrl.push(ArduinoPage);
+  }
+
+  getMessage(){
+    this.messageService.getMessages().subscribe(data =>{
+      for(var key in data){
+        console.log(data[key])
+        this.messageList.push(data[key]);
+        console.log(this.messageList);
+      }
+    },error=>console.log(error));
+  }
+  postMessages(){
+    // this.messageService.postMessages();
   }
 }

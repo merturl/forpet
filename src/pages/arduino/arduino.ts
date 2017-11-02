@@ -26,5 +26,4 @@ export class ArduinoPage {
   signOut(){
     this.afAuth.auth.signOut();
   }
-
 }
