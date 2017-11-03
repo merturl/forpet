@@ -4,9 +4,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RegisterPage } from './../register/register';
 import { AngularFireAuth } from "angularfire2/auth";
 import { LoadingController } from 'ionic-angular';
-// import { GooglePlus } from "@ionic-native/google-plus";
+import { GooglePlus } from "@ionic-native/google-plus";
 import firebase from 'firebase';
-// import {Platform} from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 /**
  * Generated class for the LoginPage page.
  *
@@ -24,7 +24,7 @@ export class LoginPage {
   user = {} as User;
   loading: any;
 
-  constructor(/*public platform:Platform,public googleplus:GooglePlus,*/ private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
+  constructor(public platform:Platform, public googleplus:GooglePlus, private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
    
   }
 
@@ -44,26 +44,26 @@ export class LoginPage {
     this.navCtrl.push(RegisterPage);
   }
   loginWithGoogle(){
-    // if (this.platform.is('android')) {
-    //   this.googleplus.login({
-    //     'webClientId':'399926770516-umj6hgmrq4jrj3eiavjacdtl9tg0hvae.apps.googleusercontent.com',
-    //     'offline':true
-    //   }).then(res=>{
-    //     firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-    //     .then(suc=>{
-    //       alert("LOGIN SUC");
-    //     }).catch(error=>{
-    //       alert("Not SUC");
-    //     })
-    //   })
-    // } else{
+    if (this.platform.is('android')) {
+      this.googleplus.login({
+        'webClientId':'399926770516-umj6hgmrq4jrj3eiavjacdtl9tg0hvae.apps.googleusercontent.com',
+        'offline':true
+      }).then(res=>{
+        firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+        .then(suc=>{
+          alert("LOGIN SUC");
+        }).catch(error=>{
+          alert("Not SUC");
+        })
+      })
+    } else{
       this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(res=>{
         console.log(res);
         this.loading.dismiss();
       });
       this.loading = this.loadingCtrl.create();
       this.loading.present();
-    // }
+    }
   }
   logoutOfGoogle(){
     this.afAuth.auth.signOut();
