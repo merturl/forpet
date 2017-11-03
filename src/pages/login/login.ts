@@ -44,7 +44,7 @@ export class LoginPage {
     this.navCtrl.push(RegisterPage);
   }
   loginWithGoogle(){
-    if (this.platform.is('core') ||this.platform.is('mobile') || this.platform.is('mobileweb')) {
+    if (this.platform.is('core') ||this.platform.is('mobile')) {
       console.log("asasd");
       this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(res=>{
         console.log(res);
