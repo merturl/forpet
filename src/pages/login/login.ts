@@ -44,27 +44,28 @@ export class LoginPage {
     this.navCtrl.push(RegisterPage);
   }
   loginWithGoogle(){
-    if (this.platform.is('android')) {
-      this.googleplus.login({
-        'webClientId':'399926770516-umj6hgmrq4jrj3eiavjacdtl9tg0hvae.apps.googleusercontent.com',
-        'offline':true
-      }).then(res=>{
-        firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-        .then(suc=>{
-          alert("LOGIN SUC");
-        }).catch(error=>{
-          alert("Not SUC");
-        })
-      })
-    } else{
+    if (this.platform.is('core') ||this.platform.is('mobile') || this.platform.is('mobileweb')) {
+      console.log("asasd");
       this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(res=>{
         console.log(res);
         this.loading.dismiss();
       });
       this.loading = this.loadingCtrl.create();
       this.loading.present();
+    } else {
+      this.googleplus.login({
+        'webClientId':'399926770516-umj6hgmrq4jrj3eiavjacdtl9tg0hvae.apps.googleusercontent.com',
+        'offline':true
+      }).then(res=>{
+        firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken)).then(suc=>{
+          alert("LOGIN SUC");
+        }).catch(error=>{
+          alert("Not SUC");
+        })
+      })
     }
   }
+
   logoutOfGoogle(){
     this.afAuth.auth.signOut();
   }
