@@ -1,4 +1,3 @@
-import { HomePage } from './../pages/home/home';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -7,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from './../pages/login/login';
 import firebase from 'firebase';
 import { FIREBASE_CONFIG } from './app.firebase.config';
+import { TabsPage } from '../pages/tabs/tabs';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,7 +25,7 @@ export class MyApp {
 
         } else {
             console.log("login");
-            this.rootPage = HomePage;
+            this.rootPage = TabsPage;
 
         }
 

@@ -1,3 +1,6 @@
+import { FoodPage } from './../pages/food/food';
+import { StatisticPage } from './../pages/statistic/statistic';
+import { TabsPage } from './../pages/tabs/tabs';
 import { ArduinoPage } from './../pages/arduino/arduino';
 import { ProfilePage } from './../pages/profile/profile';
 import { FIREBASE_CONFIG } from './app.firebase.config';
@@ -28,7 +31,10 @@ import { MessageServiceProvider } from '../providers/message-service/message-ser
     LoginPage,
     RegisterPage,
     ProfilePage,
-    ArduinoPage
+    ArduinoPage,
+    TabsPage,
+    StatisticPage,
+    FoodPage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +51,10 @@ import { MessageServiceProvider } from '../providers/message-service/message-ser
     LoginPage,
     RegisterPage,
     ProfilePage,
-    ArduinoPage
+    ArduinoPage,
+    TabsPage,
+    StatisticPage,
+    FoodPage
   ],
   providers: [
     StatusBar,

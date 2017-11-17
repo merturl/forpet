@@ -17,7 +17,8 @@ export class HomePage {
   messageList = [];
   profileData: Observable<Profile>;
   constructor(private afAuth: AngularFireAuth, public navCtrl: NavController, private toast: ToastController, private afDatabase: AngularFireDatabase, private messageService: MessageServiceProvider) {
-    this.getMessage();
+    // this.getMessage();
+    // this.postMessages();
   }
 
   ionViewWillLoad(){
@@ -52,15 +53,16 @@ export class HomePage {
   }
 
   getMessage(){
-    this.messageService.getMessages().subscribe(data =>{
-      for(var key in data){
-        console.log(data[key])
-        this.messageList.push(data[key]);
-        console.log(this.messageList);
-      }
-    },error=>console.log(error));
+    // this.messageService.getMessages().subscribe(data =>{
+    //   for(var key in data){
+    //     this.messageList.push(data[key]);
+    //   }
+    // },error=>console.log(error));
   }
   postMessages(){
-    // this.messageService.postMessages();
+    // while(1){
+    //   this.messageService.postMessage();  
+    // }
+    this.messageService.postMessage();
   }
 }

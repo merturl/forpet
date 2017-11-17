@@ -7,13 +7,13 @@
 </ion-header>
 
 <ion-content padding>
-  <button ion-button block (click)="addArduino()">기기 등록</button>
+  <button ion-button block (click)="addArduino()">기기 관리</button>
   <button ion-button block (click)="addArduino()">사용량 조회</button>
   <button ion-button block (click)="addArduino()">통계 조회</button>
   <button ion-button block (click)="addArduino()">주인 음성 전달</button>
   <ion-list *ngFor="let message of messageList">
     <ion-item>
-      {{message.id}} {{message.message}}
+      {{message.motor}} {{message.message}}
     </ion-item>
   </ion-list>
 </ion-content>

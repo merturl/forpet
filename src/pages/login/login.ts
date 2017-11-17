@@ -14,7 +14,7 @@ import { Platform } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage({})
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -44,15 +44,7 @@ export class LoginPage {
     this.navCtrl.push(RegisterPage);
   }
   loginWithGoogle(){
-    if (this.platform.is('core') ||this.platform.is('mobile')) {
-      console.log("asasd");
-      this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(res=>{
-        console.log(res);
-        this.loading.dismiss();
-      });
-      this.loading = this.loadingCtrl.create();
-      this.loading.present();
-    } else {
+    if (this.platform.is('android') && !this.platform.is('mobileweb')) {
       this.googleplus.login({
         'webClientId':'399926770516-umj6hgmrq4jrj3eiavjacdtl9tg0hvae.apps.googleusercontent.com',
         'offline':true
@@ -63,6 +55,14 @@ export class LoginPage {
           alert("Not SUC");
         })
       })
+    } else {
+      console.log("asasd");
+      this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(res=>{
+        console.log(res);
+        this.loading.dismiss();
+      });
+      this.loading = this.loadingCtrl.create();
+      this.loading.present();
     }
   }
 
