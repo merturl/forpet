@@ -21,12 +21,9 @@ export class MyApp {
         if (!user) {
             console.log("not login");
             this.rootPage = LoginPage;
-
-
         } else {
             console.log("login");
             this.rootPage = TabsPage;
-
         }
 
     });

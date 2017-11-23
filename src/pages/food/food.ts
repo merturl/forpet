@@ -1,11 +1,11 @@
+import { Weight } from './../../models/weight';
 import { Observable } from 'rxjs/Observable';
 import { Arduino } from './../../models/arduino';
 import { MessageServiceProvider } from './../../providers/message-service/message-service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import * as HighCharts from 'highcharts';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
 /**
  * Generated class for the FoodPage page.
  *
@@ -21,37 +21,46 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class FoodPage {
 
   left: string;
-  eat: number;
   arduino: Arduino;
   isExists: boolean;
   authSubscription: any;
   dbObservable: Observable<any>;
   dbSubscription: any;
+  message: string;
 
-  constructor(private afDatabase: AngularFireDatabase, private afAuth: AngularFireAuth, private messageService: MessageServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
-    this.authSubscription= this.afAuth.authState.subscribe(auth => {
-      // this.dbSubscription = this.afDatabase.object(`arduino/${auth.uid}`).snapshotChanges().subscribe(action => {
-      //   console.log(action.key)
-      //   if(action.payload.val()){
-      //     this.isExists = true;
-      //     this.arduino = action.payload.val();
-      //     console.log();
-      //   }else{
-      //     console.log(action.payload.val())
-      //     this.isExists = false;
-      //   }
-      // });
-      this.dbObservable = this.afDatabase.object(`arduino/${auth.uid}`).valueChanges();
-    });
+  constructor( public loadingCtrl: LoadingController, private afDatabase: AngularFireDatabase, private messageService: MessageServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
+    // this.dbObservable = this.afDatabase.object(`motor/${this.navParams.data.address}`).snapshotChanges();
+    console.log(this.navParams.data.address);
   }
 
   ionViewDidLoad() {
-    this.left ="남은양";
-    this.dbSubscription = this.dbObservable.subscribe(data=>{this.eat = data.weight; this.getChart();});
+    
+    // this.dbSubscription = this.dbObservable.subscribe((data)=>{this.getChart(data[data.length-1])});
+    if(this.navParams.data.address !== undefined){
+      this.isExists = true;
+      try{
+      const date = new Date();
+      this.dbObservable = this.afDatabase.list(`nowweight/${this.navParams.data.address}`).valueChanges();
+      this.dbSubscription = this.dbObservable.subscribe((data)=>{
+        if(data.length > 0 ){
+          console.log('hello');
+          this.getChart(data[data.length-1]);
+        }else{
+          this.message = "데이터가 없습니다!"
+        }
+      });
+      }catch(e){
+        console.log(e.message);
+      }
+    }else{
+      this.message = "등록된 기기가 없습니다.";
+      this.isExists = false;
+    }
   }
 
-  getChart() {
-    var myChart = HighCharts.chart('todayConsumption', {
+  async getChart(eat) {
+    console.log(eat.weight);
+    await HighCharts.chart('todayConsumption', { 
       chart: {
           plotBackgroundColor: null,
           plotBorderWidth: null,
@@ -65,19 +74,22 @@ export class FoodPage {
           text: '현재 사료량'
       },
       tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          enabled: false,
+          pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
       },
       plotOptions: {
         pie: {
+          size: '100%',
           allowPointSelect: true,
           cursor: 'pointer',
           dataLabels: {
-            enabled: true,
-            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+            enabled: false,
+            format: '<b>{point.name}</b>: {point.percentage:.0f} %',
             style: {
               color: (HighCharts.theme && HighCharts.theme.contrastTextColor) || 'black'
             }
-          }
+          },
+          showInLegend: true
         }
       },
       series: [{
@@ -85,19 +97,31 @@ export class FoodPage {
         colorByPoint: false,
         data: [{
           name: '남은량',
-          y: 100.0
+          y: 65*100/65
         }, {
           name: '먹은량',
-          y: this.eat,
-          color: 'black'
+          y: parseFloat(eat.weight)/65,
+          color: 'red'
         }]
       }]
     });
   }
 
   ionViewDidLeave() {
-    this.dbSubscription.unsubscribe();
-    this.authSubscription.unsubscribe();
+    if(this.dbSubscription !== undefined)
+        this.dbSubscription.unsubscribe();
+  }
+
+  refillFood(){
+    var loading;
+    console.log("asasd");
+    this.afDatabase.object(`motor/${this.navParams.data.address}/isRotation`).set(1).then(res=>{
+      console.log(res);
+      loading.dismiss();
+    });
+    loading = this.loadingCtrl.create();
+    loading.present();
+    this.afDatabase.object(`motor/${this.navParams.data.address}/isRotation`).set(1);
   }
   getMessage(address: string): any{
     this.messageService.getMessages(address).subscribe(data =>{

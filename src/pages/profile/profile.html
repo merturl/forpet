@@ -14,38 +14,38 @@
 
 
 <ion-content padding>
-  <div *ngIf="!isExists;else showProfile">
-    <ion-item>
-      <ion-label floating>사용자명</ion-label>
-      <ion-input [(ngModel)]="profile.username"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label floating>이름</ion-label>
-        <ion-input [(ngModel)]="profile.firstname"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label floating>성</ion-label>
-        <ion-input [(ngModel)]="profile.lastname"></ion-input>
-    </ion-item>
-    <button ion-button clear block (click)="createProfile()">프로필 생성</button>
-  </div>
-  <ng-template #showProfile>
-    <ion-card>
-        <ion-card-content>
-      <ion-item >
+  <ion-card>
+    <ion-card-content>
+      <div *ngIf="!isExists;else showProfile">
+        <ion-item>
+          <ion-label floating>사용자명</ion-label>
+          <ion-input [(ngModel)]="profile.username"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>이름</ion-label>
+            <ion-input [(ngModel)]="profile.firstname"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>성</ion-label>
+            <ion-input [(ngModel)]="profile.lastname"></ion-input>
+        </ion-item>
+        <button ion-button clear block (click)="createProfile()">프로필 생성</button>
+      </div>
+      <ng-template #showProfile>
+        <ion-item >
           <ion-label floating>사용자명</ion-label>
           <ion-input [value]="profile.username" [readonly]="true"></ion-input>
-      </ion-item>
-      <ion-item >
-        <ion-label floating>이름</ion-label>
-        <ion-input [value]="profile.firstname" [readonly]="true"></ion-input>
-      </ion-item>
-      <ion-item >
-        <ion-label floating>성</ion-label>
-        <ion-input [value]="profile.lastname" [readonly]="true"></ion-input>
-      </ion-item>
+        </ion-item>
+        <ion-item >
+          <ion-label floating>이름</ion-label>
+          <ion-input [value]="profile.firstname" [readonly]="true"></ion-input>
+        </ion-item>
+        <ion-item >
+          <ion-label floating>성</ion-label>
+          <ion-input [value]="profile.lastname" [readonly]="true"></ion-input>
+        </ion-item>
+      </ng-template>
       <button ion-button (click)="signOut()">로그 아웃</button>
-      </ion-card-content>
-    </ion-card>
-  </ng-template>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

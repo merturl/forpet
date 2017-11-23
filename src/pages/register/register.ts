@@ -1,6 +1,6 @@
 import { User } from './../../models/user';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 
 /**
@@ -18,20 +18,25 @@ import { AngularFireAuth } from "angularfire2/auth";
 export class RegisterPage {
   user = {} as User;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth) {
+  constructor(private toast: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth) {
 
   }
 
   async register(user: User){
+    var loading;
     try{
-      const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
-      
+      const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(res=>{
+        console.log(res);
+        loading.dismiss();
+      });
+      loading = this.loadingCtrl.create();
+      loading.present();
       if(result){
         this.navCtrl.pop();
       }
     }catch(e){
-      console.error(e);
+      this.toast.create( { message: `${e.message}`,
+      duration: 1000 } ).present();
     }
   }
-
 }

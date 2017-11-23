@@ -1,7 +1,6 @@
 import { Arduino } from './../../models/arduino';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 
 /**
@@ -19,41 +18,54 @@ import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 export class ArduinoPage {
   arduino = {} as Arduino;
   arduinoRef: AngularFireObject<any>;
-  uid: string;
   isExists: boolean;
-  authSubscription: any;
   dbSubscription: any;
   messageList = [];
 
-  constructor(private afDatabase: AngularFireDatabase, private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private toast: ToastController, public loadingCtrl: LoadingController, private afDatabase: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
+    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ArduinoPage');
-    this.authSubscription=this.afAuth.authState.subscribe(auth => {
-      this.uid = auth.uid;
-      this.dbSubscription = this.afDatabase.object(`arduino/${auth.uid}`).snapshotChanges().subscribe(action => {
-        console.log(action.key)
-        if(action.payload.val()){
-          this.isExists = true;
-          this.arduino = action.payload.val();
-        }else{
-          console.log(action.payload.val())
-          this.isExists = false;
-        }
-      });
+    console.log(this.navParams.data.uid);
+    this.dbSubscription = this.afDatabase.object(`arduino/${this.navParams.data.uid}`).snapshotChanges().subscribe(action => {
+      if(action.payload.exists()){
+        this.isExists = true;
+        this.arduino = action.payload.val();
+      }else{
+        console.log(action.payload.val())
+        this.isExists = false;
+      }
     });
   }
   ionViewDidLeave() {
     console.log('ionViewDidLeave ArduinoPage');
     this.dbSubscription.unsubscribe();
-    this.authSubscription.unsubscribe();
   }
   
   registArduino(){
-    this.arduino.motor = false;
-    this.arduino.sound = false;
-    this.arduino.weight = 0;
-    this.afDatabase.object(`arduino/${this.uid}`).set(this.arduino).then(()=>this.navCtrl.pop());
+    var loading;
+    try{
+    if(this.arduino.address.length > 0){
+      this.afDatabase.object(`arduino/${this.navParams.data.uid}`).set(this.arduino).then(res=>{
+        loading.dismiss().then(res=>{
+          this.toast.create( { message: `아두이노가 저장 되었습니다.`,
+          duration: 1000 } ).present();
+        });
+      }); //list().puh -> set key but object().set -> have not key
+      loading = this.loadingCtrl.create();
+      loading.present();
+    }else{
+      throw '1';
+    }
+  }catch(e){
+    this.toast.create( { message: `등록 실패.`,
+    duration: 1000 } ).present();
+  }
+    // this.arduino.motor = false;
+    // this.arduino.sound = false;
+    // this.arduino.weight = 0;
+    
   }
 }

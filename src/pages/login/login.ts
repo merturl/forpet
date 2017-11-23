@@ -1,6 +1,6 @@
 import { User } from './../../models/user';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { RegisterPage } from './../register/register';
 import { AngularFireAuth } from "angularfire2/auth";
 import { LoadingController } from 'ionic-angular';
@@ -24,19 +24,23 @@ export class LoginPage {
   user = {} as User;
   loading: any;
 
-  constructor(public platform:Platform, public googleplus:GooglePlus, private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController) {
+  constructor(private toast: ToastController, private loadingCtrl: LoadingController, public platform:Platform, public googleplus:GooglePlus, private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
    
   }
 
   async login(user: User){
     try {
       this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then(authData => {
-        this.loading.dismiss();
+        this.loading.dismiss().then(res=>{
+          this.toast.create( { message: `환영합니다 ${authData.email}님`,
+          duration: 1000 } ).present();
+        });
       }, error=>{console.log(error);this.loading.dismiss();});
       this.loading = this.loadingCtrl.create();
       this.loading.present();
     }catch (e){
-      console.error(e);
+      this.toast.create( { message: `${e.message}`,
+      duration: 1000 } ).present();
     }
   }
 

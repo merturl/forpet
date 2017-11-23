@@ -14,5 +14,15 @@
 
 
 <ion-content padding>
-  <div id="todayConsumption" style="display: block;"	></div>
+  <div *ngIf="isExists; else showMessage">
+    <div id="todayConsumption" style="display: block;"></div>
+    <button ion-button block (click)="refillFood()">사료 보충</button>
+  </div>
+  <ng-template #showMessage>
+    <ion-card color="danger">
+      <ion-card-content>
+        {{message}}
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>

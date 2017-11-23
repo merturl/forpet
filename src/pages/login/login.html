@@ -14,21 +14,27 @@
 
 
 <ion-content padding>
-  <ion-item>
-    <ion-label floating>이메일 주소</ion-label>
-    <ion-input type="text" [(ngModel)]="user.email"></ion-input>
-  </ion-item>
+  <ion-card>
+    <ion-card-content>
+      <ion-item>
+        <ion-label floating>이메일 주소</ion-label>
+        <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+      </ion-item>
 
-  <ion-item>
-      <ion-label floating>비밀 번호</ion-label>
-      <ion-input type="password" [(ngModel)]="user.password"></ion-input>
-  </ion-item>
-
-  <Button ion-button (click)="login(user)">로그인</Button>
-  <Button ion-button (click)="register()" color="light">회원가입</Button>
-  <Button ion-button icon-left (click)="loginWithGoogle()" color="light" >
-    <ion-icon name="logo-googleplus" color="danger"></ion-icon>
-    구글 로그인
-  </Button>
-
+      <ion-item>
+        <ion-label floating>비밀 번호</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-buttons>
+          <Button ion-button (click)="register()" color="light">회원가입</Button>
+          <Button ion-button icon-left (click)="loginWithGoogle()" color="light">
+              <ion-icon name="logo-googleplus" color="danger"></ion-icon>
+              구글 로그인
+            </Button>
+          <Button ion-button (click)="login(user)">로그인</Button>
+        </ion-buttons>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

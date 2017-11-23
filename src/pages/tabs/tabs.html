@@ -5,8 +5,8 @@
   Ionic pages and navigation.
 -->
 <ion-tabs>
-  <ion-tab [root]="tab1page" [tabsHideOnSubPages]='true' tabTitle='기기정보' tabIcon='paw'></ion-tab>
-  <ion-tab [root]="tab2page" tabTitle='사료량' tabIcon='restaurant'></ion-tab>
-  <ion-tab [root]="tab3page" tabTitle='통계량' tabIcon='stats'></ion-tab>
-  <ion-tab [root]="tab4page" tabTitle='프로필' tabIcon='person'></ion-tab>
+  <ion-tab [root]="tab1page" [rootParams]='tabParams' [tabsHideOnSubPages]='true' tabTitle='기기정보' tabIcon='paw'></ion-tab>
+  <ion-tab [root]="tab2page" [rootParams]='tabParams' tabTitle='사료량' tabIcon='restaurant'></ion-tab>
+  <ion-tab [root]="tab3page" [rootParams]='tabParams' tabTitle='통계량' tabIcon='stats'></ion-tab>
+  <ion-tab [root]="tab4page" [rootParams]='tabParams' tabTitle='프로필' tabIcon='person'></ion-tab>
 </ion-tabs>
