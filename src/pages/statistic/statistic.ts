@@ -52,10 +52,12 @@ export class StatisticPage {
       // this.getWeekChart(this.datelist);
     });
   }
+
   ionViewDidLeave(){
     console.log('ionViewDidLeave TabsPage');
     this.dbSubscription.unsubscribe();
   }
+  
   getWeekChart(weekdate){
     
     HighCharts.chart('weekConsumption', {
@@ -127,6 +129,7 @@ export class StatisticPage {
           series: [{
             showInLegend: false,
             name: 'PetName',
+            formatter: ,
             data: (function () {
               // generate an array of random data
               var data = [], i;
