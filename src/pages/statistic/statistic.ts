@@ -1,4 +1,4 @@
-import { Weight } from './../../models/weight';
+// import { Weight } from './../../models/weight';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as HighCharts from 'highcharts';
@@ -18,21 +18,24 @@ import { Observable } from 'rxjs/Observable';
 })
 export class StatisticPage {
   dbSubscription: any;
-  dbObservable: Observable<Date>
-  datelist = [];
+  dbObservable: Observable<Date>;
   result: number = 0;
 
   constructor(private afDatabase: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
-    const date = new Date();
-    console.log()
-    // ${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`
-    this.dbSubscription = this.afDatabase.object(`weight/${this.navParams.data.address}`).snapshotChanges().subscribe(data=>{
+  }
+
+  ionViewDidLoad() {
+    this.dbSubscription = this.afDatabase.object(`averageweight/${this.navParams.data.address}`).snapshotChanges().subscribe( async data=>{
+      var result = Object.keys(data.payload.val()).map(function(key) {
+        return [Number(key), data.payload.val()[key]];
+      });
+      this.getWeekChart(result.reverse());
       // console.log(data);
-      console.log(data.payload.exportVal());
-      for(var key in data.payload.val()){
-        this.datelist= data.payload.val();
-        console.log(this.datelist);    
-      }
+      // console.log(data.payload.exportVal());
+      // for(var key in data.payload.val()){
+      //   this.datelist= data.payload.val();
+      //   console.log(this.datelist);    
+      // }
       // this.result = 0;
       // data.forEach(async (day)=>{
       //   let dayLength=0;
@@ -46,16 +49,15 @@ export class StatisticPage {
       // });
       // console.log(this.datelist);
       // this.getWeekChart(this.datelist);
+      // this.getWeekChart(this.datelist);
     });
-  }
-
-  ionViewDidLoad() {
   }
   ionViewDidLeave(){
     console.log('ionViewDidLeave TabsPage');
     this.dbSubscription.unsubscribe();
   }
   getWeekChart(weekdate){
+    
     HighCharts.chart('weekConsumption', {
       chart: {
         type: 'column'
@@ -67,7 +69,15 @@ export class StatisticPage {
         text: '주간 섭취량'
       },
       xAxis: {
-        categories: ["월","화","수"]  // here input date
+        categories: (function () {
+          // generate an array of random data
+          var data = [], i;
+              
+          for (i = weekdate.length-1; i >= 0; i -= 1) {
+              data.push(weekdate[i][0]);
+          }
+          return data;
+      }())  // here input date
       },
       yAxis: {
         min: 0,
@@ -117,7 +127,14 @@ export class StatisticPage {
           series: [{
             showInLegend: false,
             name: 'PetName',
-            data: [1,2,3]
+            data: (function () {
+              // generate an array of random data
+              var data = [], i;
+              for (i = weekdate.length-1; i >= 0; i -= 1) {
+                  data.push(weekdate[i][1].weight);
+              }
+              return data;
+          }())
           }]
         });
       }

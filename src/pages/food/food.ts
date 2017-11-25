@@ -1,4 +1,3 @@
-import { Weight } from './../../models/weight';
 import { Observable } from 'rxjs/Observable';
 import { Arduino } from './../../models/arduino';
 import { MessageServiceProvider } from './../../providers/message-service/message-service';
@@ -39,7 +38,6 @@ export class FoodPage {
     if(this.navParams.data.address !== undefined){
       this.isExists = true;
       try{
-      const date = new Date();
       this.dbObservable = this.afDatabase.list(`nowweight/${this.navParams.data.address}`).valueChanges();
       this.dbSubscription = this.dbObservable.subscribe((data)=>{
         if(data.length > 0 ){

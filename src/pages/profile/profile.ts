@@ -39,7 +39,7 @@ export class ProfilePage {
   createProfile(){
     try {
       if(this.navParams.data.uid && this.profile.firstname && this.profile.lastname && this.profile.username){
-        const result = this.afDatabase.object(`profile/${this.navParams.data.uid}`).set(this.profile).then(res=>{
+        this.afDatabase.object(`profile/${this.navParams.data.uid}`).set(this.profile).then(res=>{
           this.loading.dismiss().then(res=>{
             this.toast.create( { message: `프로필이 저장 되었습니다.`,
             duration: 1000 } ).present();
