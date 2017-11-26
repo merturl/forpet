@@ -62,7 +62,8 @@ export class StatisticPage {
     
     HighCharts.chart('weekConsumption', {
       chart: {
-        type: 'column'
+        type: 'column',
+        backgroundColor: 'rgba(255, 255, 255, 0.5)'
       },
       credits: {
         enabled: false
@@ -129,7 +130,6 @@ export class StatisticPage {
           series: [{
             showInLegend: false,
             name: 'PetName',
-            formatter: ,
             data: (function () {
               // generate an array of random data
               var data = [], i;

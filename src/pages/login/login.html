@@ -5,36 +5,29 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="primary">
     <ion-title>로그인</ion-title>
   </ion-navbar>
-
 </ion-header>
-
-
-<ion-content padding>
+<ion-content id="mainColor" padding>
   <ion-card>
-    <ion-card-content>
-      <ion-item>
-        <ion-label floating>이메일 주소</ion-label>
-        <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+    <!-- <img class="loginLogo" src="assets/imgs/Logo.png"/> -->
+    <ion-card-content>  
+      <Button ion-button full icon-left (click)="loginWithGoogle()" color="dangerOrigin">
+          <ion-icon name="logo-googleplus" color="white"></ion-icon>
+          구글 로그인
+      </Button>
+      <div class="hrLine"></div>
+      <ion-item class="buttonsBg">
+        <ion-label class="pontColor"  floating>이메일 주소</ion-label>
+        <ion-input class="pontColor"  type="text"  textcolor="white"[(ngModel)]="user.email" ></ion-input>
       </ion-item>
-
-      <ion-item>
-        <ion-label floating>비밀 번호</ion-label>
-        <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+      <ion-item class="buttonsBg">
+        <ion-label class="pontColor" floating>비밀 번호</ion-label>
+        <ion-input class="pontColor" type="password" [(ngModel)]="user.password"></ion-input>
       </ion-item>
-      <ion-row>
-        <ion-buttons>
-          <Button ion-button (click)="register()" color="light">회원가입</Button>
-          <Button ion-button icon-left (click)="loginWithGoogle()" color="light">
-              <ion-icon name="logo-googleplus" color="danger"></ion-icon>
-              구글 로그인
-            </Button>
-          <Button ion-button (click)="login(user)">로그인</Button>
-        </ion-buttons>
-      </ion-row>
+        <Button ion-button block (click)="login(user)">로그인</Button>
+        <Button ion-button block (click)="register()" color="danger">회원가입</Button>
     </ion-card-content>
   </ion-card>
 </ion-content>

@@ -1,3 +1,32 @@
 page-login {
+    .loginLogo {
+        display: block;
+        padding: 20px;
+        margin: auto;
+        width: 400px;
+        height: 400px;
+    }
+    .contentColor{
+        background-color: black;
+    }
+    .hrLine { 
+        width: 75%;
+        text-align:center;
+        border-bottom: 1px dotted rgb(8, 8, 8);
+        line-height: 0.1em;
+        margin:15px auto;
+    }
+    .hrLine span {
+        background:#fff;
+        padding:0 5px;
+        font-size:18px;
+        color:#000;
+    }
 
+    .buttonsBg {
+        background: rgba(0, 0, 0, 0.3) !important;
+    }
+    .pontColor {
+        color: white !important;
+    }
 }

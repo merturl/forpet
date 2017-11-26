@@ -60,7 +60,7 @@ export class FoodPage {
     console.log(eat.weight);
     await HighCharts.chart('todayConsumption', { 
       chart: {
-          plotBackgroundColor: null,
+          backgroundColor: 'rgba(255, 255, 255, 0.5)',
           plotBorderWidth: null,
           plotShadow: false,
           type: 'pie'
@@ -94,12 +94,13 @@ export class FoodPage {
         name: '사료',
         colorByPoint: false,
         data: [{
-          name: '남은량',
-          y: 65*100/65
+          name: '남은량 : '+(65*100/65-(parseFloat(eat.weight)/65)).toFixed(2).toString()+"%",
+          y: 65*100/65,
+          color: '#bf6341'
         }, {
-          name: '먹은량',
-          y: parseFloat(eat.weight)/65,
-          color: 'red'
+          name: '먹은량: '+(parseFloat(eat.weight)/65).toFixed(2).toString()+"%",
+          y: (parseFloat(eat.weight)/65),
+          color: 'white'
         }]
       }]
     });

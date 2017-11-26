@@ -6,23 +6,23 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Arduino</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content id="mainColor" padding>
   <div *ngIf="!isExists;else showArduino">
-    <ion-item >
+    <ion-item class="buttonsBg">
       <ion-label floating>기기 시리얼넘버</ion-label>
       <ion-input [(ngModel)]="arduino.address"></ion-input>
     </ion-item>
     <button ion-button block (click)="registArduino()">기기 등록</button>
   </div>
   <ng-template #showArduino>
-    <ion-item >
+    <ion-item class="buttonsBg">
         <ion-label floating>시리얼 넘버</ion-label>
         <ion-input [value]="arduino.address" [readonly]="true"></ion-input>
     </ion-item>
