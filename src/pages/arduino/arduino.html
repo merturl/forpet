@@ -26,6 +26,8 @@
         <ion-label floating>시리얼 넘버</ion-label>
         <ion-input [value]="arduino.address" [readonly]="true"></ion-input>
     </ion-item>
+    <button ion-button block (click)="registArduino()">기기 수정</button>
+    <button ion-button block (click)="registArduino()" color="dangerOrigin">기기 삭제</button>
     <!-- <ion-item >
       <ion-label floating>모터</ion-label>
       <ion-input [value]="arduino.motor" [readonly]="true"></ion-input>

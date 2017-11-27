@@ -20,46 +20,43 @@ export class StatisticPage {
   dbSubscription: any;
   dbObservable: Observable<Date>;
   result: number = 0;
+  isExists : boolean;
+  message: string;
+  
 
   constructor(private afDatabase: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    this.dbSubscription = this.afDatabase.object(`averageweight/${this.navParams.data.address}`).snapshotChanges().subscribe( async data=>{
-      var result = Object.keys(data.payload.val()).map(function(key) {
-        return [Number(key), data.payload.val()[key]];
+    if(this.navParams.data.address !== undefined){
+      this.isExists = true;
+      this.dbSubscription = this.afDatabase.object(`averageweight/${this.navParams.data.address}`).snapshotChanges().subscribe( async data=>{
+        if(data.key !== undefined && data.key !== null){
+          console.log("sas"+data.key );
+          console.log("sas"+data.payload.val());
+          var result = Object.keys(data.payload.val()).map(function(key) {
+            return [Number(key), data.payload.val()[key]];
+          });
+          this.getWeekChart(result.reverse());
+        }else{
+          this.message = "데이터가 없습니다!"
+          this.isExists =false;
+        }
       });
-      this.getWeekChart(result.reverse());
-      // console.log(data);
-      // console.log(data.payload.exportVal());
-      // for(var key in data.payload.val()){
-      //   this.datelist= data.payload.val();
-      //   console.log(this.datelist);    
-      // }
-      // this.result = 0;
-      // data.forEach(async (day)=>{
-      //   let dayLength=0;
-      //   for(var key in day){
-      //     this.result+= await day[key].weight;
-      //     dayLength++;
-      //   }
-      //   console.log(dayLength);
-      //   this.datelist.push(this.result/dayLength);
-      //   console.log(this.result);
-      // });
-      // console.log(this.datelist);
-      // this.getWeekChart(this.datelist);
-      // this.getWeekChart(this.datelist);
-    });
+    }else{
+      this.message = "등록된 기기가 없습니다.";
+      this.isExists = false;
+    }
   }
 
   ionViewDidLeave(){
     console.log('ionViewDidLeave TabsPage');
-    this.dbSubscription.unsubscribe();
+    if(this.dbSubscription !== undefined){
+      this.dbSubscription.unsubscribe();
+    }
   }
   
   getWeekChart(weekdate){
-    
     HighCharts.chart('weekConsumption', {
       chart: {
         type: 'column',
@@ -134,8 +131,10 @@ export class StatisticPage {
               // generate an array of random data
               var data = [], i;
               for (i = weekdate.length-1; i >= 0; i -= 1) {
-                  data.push(weekdate[i][1].weight);
+                data.push(parseFloat((weekdate[i][1].weight).toFixed(2)));
+                  // data.push((weekdate[i][1].weight));
               }
+              console.log(data);
               return data;
           }())
           }]

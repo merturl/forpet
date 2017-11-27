@@ -45,6 +45,7 @@ export class FoodPage {
           this.getChart(data[data.length-1]);
         }else{
           this.message = "데이터가 없습니다!"
+          this.isExists =false;
         }
       });
       }catch(e){
@@ -57,7 +58,9 @@ export class FoodPage {
   }
 
   async getChart(eat) {
-    console.log(eat.weight);
+    if(eat.weight < 0){
+      eat.weight = 0;
+    }
     await HighCharts.chart('todayConsumption', { 
       chart: {
           backgroundColor: 'rgba(255, 255, 255, 0.5)',
@@ -94,21 +97,22 @@ export class FoodPage {
         name: '사료',
         colorByPoint: false,
         data: [{
-          name: '남은량 : '+(65*100/65-(parseFloat(eat.weight)/65)).toFixed(2).toString()+"%",
-          y: 65*100/65,
-          color: '#bf6341'
-        }, {
-          name: '먹은량: '+(parseFloat(eat.weight)/65).toFixed(2).toString()+"%",
-          y: (parseFloat(eat.weight)/65),
+          name: '먹은량 : '+(65*100/65-(parseFloat(eat.weight)/65)*100).toFixed(2).toString()+"%",
+          y: 65*100/65-(parseFloat(eat.weight)/65)*100,
           color: 'white'
+        }, {
+          name: '남은량: '+(parseFloat(eat.weight)/65*100).toFixed(2).toString()+"%",
+          y: (parseFloat(eat.weight)/65*100),
+          color: '#bf6341'
         }]
       }]
     });
   }
 
   ionViewDidLeave() {
-    if(this.dbSubscription !== undefined)
-        this.dbSubscription.unsubscribe();
+    if(this.dbSubscription !== undefined){
+      this.dbSubscription.unsubscribe();
+    }
   }
 
   refillFood(){

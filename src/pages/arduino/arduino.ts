@@ -23,21 +23,18 @@ export class ArduinoPage {
   messageList = [];
 
   constructor(private toast: ToastController, public loadingCtrl: LoadingController, private afDatabase: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
-    
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ArduinoPage');
-    console.log(this.navParams.data.uid);
     this.dbSubscription = this.afDatabase.object(`arduino/${this.navParams.data.uid}`).snapshotChanges().subscribe(action => {
       if(action.payload.exists()){
         this.isExists = true;
         this.arduino = action.payload.val();
       }else{
-        console.log(action.payload.val())
         this.isExists = false;
       }
     });
+  }
+
+  ionViewDidLoad() {
+    
   }
   ionViewDidLeave() {
     console.log('ionViewDidLeave ArduinoPage');
@@ -45,27 +42,35 @@ export class ArduinoPage {
   }
   
   registArduino(){
-    var loading;
-    try{
-    if(this.arduino.address.length > 0){
+    // var loading;
+    if(this.arduino.address !== undefined && this.arduino.address.length > 0){
       this.afDatabase.object(`arduino/${this.navParams.data.uid}`).set(this.arduino).then(res=>{
-        loading.dismiss().then(res=>{
-          this.toast.create( { message: `아두이노가 저장 되었습니다.`,
-          duration: 1000 } ).present();
-        });
-      }); //list().puh -> set key but object().set -> have not key
-      loading = this.loadingCtrl.create();
-      loading.present();
+        this.toast.create( { message: `아두이노가 저장 되었습니다.`, duration: 1000 } ).present();
+      });
+      console.log(this.arduino.address+"tihs11");
     }else{
-      throw '1';
+      this.toast.create( { message: `등록 실패.`, duration: 1000 } ).present();
     }
-  }catch(e){
-    this.toast.create( { message: `등록 실패.`,
-    duration: 1000 } ).present();
-  }
+    
+    // try{
+    //   if(this.arduino.address.length > 0){
+    //     .then(res=>{
+    //       loading.dismiss().then(res=>{
+    //         this.toast.create( { message: `아두이노가 저장 되었습니다.`,
+    //         duration: 1000 } ).present();
+    //       });
+    //     }); //list().puh -> set key but object().set -> have not key
+    //     loading = this.loadingCtrl.create();
+    //     loading.present();
+    //   }else{
+    //     throw '1';
+    //   }
+    // }catch(e){
+    //   this.toast.create( { message: `등록 실패.`,
+    //   duration: 1000 } ).present();
+    // }
     // this.arduino.motor = false;
     // this.arduino.sound = false;
     // this.arduino.weight = 0;
-    
   }
 }

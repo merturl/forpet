@@ -14,29 +14,31 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-#mainColor {
-    background-color: color($colors, energy);
-    background-image: url("/assets/imgs/Logo.png") !important;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 50%;
-}
-#cardColor {
-    background-color: color($colors, dogblue);
-}
-ion-card {
-    width: 90% !important;
-    margin: auto !important;
-    margin-top: 20% !important;
-    background: rgba(0, 0, 0, 0.3) !important;
-}
-.buttonsBg {
-    background: rgba(0, 0, 0, 0.3) !important;
-    color: white !important;
-}
-.buttonsBg ion-label{
-    color: white !important;
-}
-.pontColor {
-    color: white !important;
+.md {
+    #mainColor {
+        background-color: color($colors, energy);
+        background-image: url("../assets/imgs/Logo.png") !important;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 50%;
+    }
+    #cardColor {
+        background-color: color($colors, dogblue);
+    }
+    ion-card {
+        width: 90% !important;
+        margin: auto !important;
+        margin-top: 20% !important;
+        background: rgba(0, 0, 0, 0.3) !important;
+    }
+    .buttonsBg {
+        background: rgba(0, 0, 0, 0.3) !important;
+        color: white !important;
+    }
+    .buttonsBg ion-label{
+        color: white !important;
+    }
+    .pontColor {
+        color: white !important;
+    }
 }

@@ -18,7 +18,7 @@ export class MessageServiceProvider {
 
   // private url : string = 'https://www.gurglingnuns.com';
   // private url : string = 'http://restcountries.eu/rest/v2/all';
-  private url : string = 'http://116.33.27.63:80/';
+  private url : string = 'http://116.33.27.63:217/';
 
   constructor(private http: HttpClient) {
     

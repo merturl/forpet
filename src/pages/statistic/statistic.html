@@ -14,5 +14,14 @@
 
 
 <ion-content id="mainColor" padding>
-  <div id="weekConsumption" style="display: block;"></div>
+  <div *ngIf="isExists; else showMessage">
+    <div id="weekConsumption" style="display: block;"></div>
+  </div>
+  <ng-template #showMessage>
+    <ion-card color="danger">
+      <ion-card-content>
+        {{message}}
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>
