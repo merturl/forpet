@@ -40,8 +40,6 @@ import { MessageServiceProvider } from '../providers/message-service/message-ser
     BrowserModule,
     IonicModule.forRoot(MyApp, {
       // tabsPlacement: 'top'
-      modalEnter: 'modal-slide-in',
-      modalLeave: 'modal-slide-out',
     }),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,

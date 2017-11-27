@@ -33,24 +33,19 @@ export class FoodPage {
   }
 
   ionViewDidLoad() {
-    
     // this.dbSubscription = this.dbObservable.subscribe((data)=>{this.getChart(data[data.length-1])});
     if(this.navParams.data.address !== undefined){
       this.isExists = true;
-      try{
       this.dbObservable = this.afDatabase.list(`nowweight/${this.navParams.data.address}`).valueChanges();
       this.dbSubscription = this.dbObservable.subscribe((data)=>{
-        if(data.length > 0 ){
-          console.log('hello');
-          this.getChart(data[data.length-1]);
+        if(data.length > 0){
+          console.log(data);
+          this.getChart(data);
         }else{
           this.message = "데이터가 없습니다!"
           this.isExists =false;
         }
       });
-      }catch(e){
-        console.log(e.message);
-      }
     }else{
       this.message = "등록된 기기가 없습니다.";
       this.isExists = false;
@@ -58,9 +53,10 @@ export class FoodPage {
   }
 
   async getChart(eat) {
-    if(eat.weight < 0){
-      eat.weight = 0;
+    if(eat < 0){
+      eat = 0;
     }
+    console.log(eat);
     await HighCharts.chart('todayConsumption', { 
       chart: {
           backgroundColor: 'rgba(255, 255, 255, 0.5)',
@@ -97,12 +93,12 @@ export class FoodPage {
         name: '사료',
         colorByPoint: false,
         data: [{
-          name: '먹은량 : '+(65*100/65-(parseFloat(eat.weight)/65)*100).toFixed(2).toString()+"%",
-          y: 65*100/65-(parseFloat(eat.weight)/65)*100,
+          name: '먹은량 : '+(65*100/65-(parseFloat(eat)/65)*100).toFixed(2).toString()+"%",
+          y: 65*100/65-(parseFloat(eat)/65)*100,
           color: 'white'
         }, {
-          name: '남은량: '+(parseFloat(eat.weight)/65*100).toFixed(2).toString()+"%",
-          y: (parseFloat(eat.weight)/65*100),
+          name: '남은량: '+(parseFloat(eat)/65*100).toFixed(2).toString()+"%",
+          y: (parseFloat(eat)/65*100),
           color: '#bf6341'
         }]
       }]

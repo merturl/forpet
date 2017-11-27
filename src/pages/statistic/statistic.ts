@@ -28,10 +28,11 @@ export class StatisticPage {
   }
 
   ionViewDidLoad() {
-    if(this.navParams.data.address !== undefined){
+    if(this.navParams.data.address !== undefined || this.navParams.data.address !== null){
       this.isExists = true;
+      console.log(this.navParams.data.address);
       this.dbSubscription = this.afDatabase.object(`averageweight/${this.navParams.data.address}`).snapshotChanges().subscribe( async data=>{
-        if(data.key !== undefined && data.key !== null){
+        if(data.key !== null){
           console.log("sas"+data.key );
           console.log("sas"+data.payload.val());
           var result = Object.keys(data.payload.val()).map(function(key) {

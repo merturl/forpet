@@ -1,6 +1,6 @@
 import { Arduino } from './../../models/arduino';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController, AlertController } from 'ionic-angular';
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 
 /**
@@ -22,7 +22,7 @@ export class ArduinoPage {
   dbSubscription: any;
   messageList = [];
 
-  constructor(private toast: ToastController, public loadingCtrl: LoadingController, private afDatabase: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private alertCtrl: AlertController, private toast: ToastController, public loadingCtrl: LoadingController, private afDatabase: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
     this.dbSubscription = this.afDatabase.object(`arduino/${this.navParams.data.uid}`).snapshotChanges().subscribe(action => {
       if(action.payload.exists()){
         this.isExists = true;
@@ -40,9 +40,42 @@ export class ArduinoPage {
     console.log('ionViewDidLeave ArduinoPage');
     this.dbSubscription.unsubscribe();
   }
-  
+
+  removeArduino(){
+    this.afDatabase.object(`arduino/${this.navParams.data.uid}`).remove();
+    this.arduino.address = '';
+  }
+
+  updateArduino(){
+    let prompt = this.alertCtrl.create({
+      title: '기기 정보 수정',
+      inputs: [
+        {
+          name: 'address',
+          placeholder: '변경할 기기 번호를 입력하세요'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            this.toast.create( { message: `아두이노 정보가 삭제 되었습니다.`, duration: 1000 } ).present();
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            this.afDatabase.object(`arduino/${this.navParams.data.uid}`).set({address: data.address})
+            .then(()=>{this.toast.create( { message: `아두이노 정보가 변경 되었습니다.`, duration: 1000 } ).present();});
+            console.log(data.address);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
   registArduino(){
-    // var loading;
     if(this.arduino.address !== undefined && this.arduino.address.length > 0){
       this.afDatabase.object(`arduino/${this.navParams.data.uid}`).set(this.arduino).then(res=>{
         this.toast.create( { message: `아두이노가 저장 되었습니다.`, duration: 1000 } ).present();
@@ -52,6 +85,7 @@ export class ArduinoPage {
       this.toast.create( { message: `등록 실패.`, duration: 1000 } ).present();
     }
     
+    // var loading;
     // try{
     //   if(this.arduino.address.length > 0){
     //     .then(res=>{

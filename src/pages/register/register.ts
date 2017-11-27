@@ -19,7 +19,7 @@ export class RegisterPage {
   user = {} as User;
 
   constructor(private toast: ToastController, public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth) {
-
+    
   }
 
   async register(user: User){
