@@ -5,7 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar color="primarySeceond">
     <ion-title>로그인</ion-title>
   </ion-navbar>
 </ion-header>
@@ -26,7 +26,7 @@
         <ion-label class="pontColor" floating>비밀 번호</ion-label>
         <ion-input class="pontColor" type="password" [(ngModel)]="user.password"></ion-input>
       </ion-item>
-        <Button ion-button block (click)="login(user)">로그인</Button>
+        <Button ion-button block color="primarySeceond" (click)="login(user)">로그인</Button>
         <Button ion-button block (click)="register()" color="danger">회원가입</Button>
     </ion-card-content>
   </ion-card>

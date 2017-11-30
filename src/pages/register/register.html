@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primarySeceond">
     <ion-title>회원등록</ion-title>
   </ion-navbar>
 
@@ -16,17 +16,17 @@
 <ion-content id="mainColor" padding>
   <ion-card>
     <ion-card-content>
-      <ion-item>
+      <ion-item class="buttonsBg">
         <ion-label floating>이메일 주소</ion-label>
         <ion-input type="text" [(ngModel)]="user.email"></ion-input>
       </ion-item>
 
-      <ion-item>
+      <ion-item class="buttonsBg">
         <ion-label floating>비밀 번호</ion-label>
         <ion-input type="password" [(ngModel)]="user.password"></ion-input>
       </ion-item>
       <ion-row>
-        <Button ion-button end (click)="register(user)">회원가입</Button>
+        <Button ion-button end color="primarySeceond" (click)="register(user)">회원가입</Button>
       </ion-row>
     </ion-card-content>
   </ion-card>      

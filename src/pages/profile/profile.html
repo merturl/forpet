@@ -6,8 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar color="primary">
-    <ion-title>Profile</ion-title>
+  <ion-navbar color="primarySeceond">
+    <ion-title>프로필</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -21,15 +21,15 @@
           <ion-label floating>사용자명</ion-label>
           <ion-input [(ngModel)]="profile.username"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item class="buttonsBg">
             <ion-label floating>이름</ion-label>
             <ion-input [(ngModel)]="profile.firstname"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item class="buttonsBg">
             <ion-label floating>성</ion-label>
             <ion-input [(ngModel)]="profile.lastname"></ion-input>
         </ion-item>
-        <button ion-button clear block (click)="createProfile()">프로필 생성</button>
+        <button ion-button block color="primarySeceond" (click)="createProfile()">프로필 생성</button>
       </div>
       <ng-template #showProfile>
         <ion-item class="buttonsBg">
@@ -45,7 +45,7 @@
           <ion-input [value]="profile.lastname" [readonly]="true"></ion-input>
         </ion-item>
       </ng-template>
-      <button ion-button (click)="signOut()">로그 아웃</button>
+      <button ion-button full color="dangerOrigin" (click)="signOut()">로그 아웃</button>
     </ion-card-content>
   </ion-card>
 </ion-content>

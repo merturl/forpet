@@ -1,7 +1,8 @@
 import { Arduino } from './../../models/arduino';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController, AlertController, App } from 'ionic-angular';
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the ArduinoPage page.
@@ -22,7 +23,11 @@ export class ArduinoPage {
   dbSubscription: any;
   messageList = [];
 
-  constructor(private alertCtrl: AlertController, private toast: ToastController, public loadingCtrl: LoadingController, private afDatabase: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public app: App, private alertCtrl: AlertController, private toast: ToastController, public loadingCtrl: LoadingController, private afDatabase: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
+   
+  }
+
+  ionViewDidLoad() {
     this.dbSubscription = this.afDatabase.object(`arduino/${this.navParams.data.uid}`).snapshotChanges().subscribe(action => {
       if(action.payload.exists()){
         this.isExists = true;
@@ -32,10 +37,6 @@ export class ArduinoPage {
       }
     });
   }
-
-  ionViewDidLoad() {
-    
-  }
   ionViewDidLeave() {
     console.log('ionViewDidLeave ArduinoPage');
     this.dbSubscription.unsubscribe();
@@ -44,6 +45,8 @@ export class ArduinoPage {
   removeArduino(){
     this.afDatabase.object(`arduino/${this.navParams.data.uid}`).remove();
     this.arduino.address = '';
+    this.navParams.data.address = null;
+    this.app.getRootNav().setRoot(TabsPage);
   }
 
   updateArduino(){
@@ -59,7 +62,7 @@ export class ArduinoPage {
         {
           text: 'Cancel',
           handler: data => {
-            this.toast.create( { message: `아두이노 정보가 삭제 되었습니다.`, duration: 1000 } ).present();
+            this.toast.create( { message: `취소되었습니다.`, duration: 1000 } ).present();
           }
         },
         {
@@ -80,6 +83,7 @@ export class ArduinoPage {
       this.afDatabase.object(`arduino/${this.navParams.data.uid}`).set(this.arduino).then(res=>{
         this.toast.create( { message: `아두이노가 저장 되었습니다.`, duration: 1000 } ).present();
       });
+      this.app.getRootNav().setRoot(TabsPage);
       console.log(this.arduino.address+"tihs11");
     }else{
       this.toast.create( { message: `등록 실패.`, duration: 1000 } ).present();

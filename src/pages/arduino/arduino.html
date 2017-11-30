@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar color="primary">
+  <ion-navbar color="primarySeceond">
     <ion-title>기기정보</ion-title>
   </ion-navbar>
 
@@ -14,31 +14,33 @@
 
 
 <ion-content id="mainColor" padding>
-  <div *ngIf="!isExists;else showArduino">
-    <ion-item class="buttonsBg">
-      <ion-label floating>기기 시리얼넘버</ion-label>
-      <ion-input [(ngModel)]="arduino.address"></ion-input>
-    </ion-item>
-    <button ion-button block (click)="registArduino()">기기 등록</button>
+  <div class="arduinoPage">
+    <div *ngIf="!isExists;else showArduino">
+      <ion-item class="buttonsBg">
+        <ion-label floating>기기 시리얼넘버</ion-label>
+        <ion-input [(ngModel)]="arduino.address"></ion-input>
+      </ion-item>
+      <button ion-button block color="primarySeceond" (click)="registArduino()">기기 등록</button>
+    </div>
+    <ng-template #showArduino>
+      <ion-item class="buttonsBg">
+          <ion-label floating>시리얼 넘버</ion-label>
+          <ion-input [value]="arduino.address" [readonly]="true"></ion-input>
+      </ion-item>
+      <button ion-button block  color="primarySeceond" (click)="updateArduino()">기기 수정</button>
+      <button ion-button block (click)="removeArduino()" color="dangerOrigin">기기 삭제</button>
+      <!-- <ion-item >
+        <ion-label floating>모터</ion-label>
+        <ion-input [value]="arduino.motor" [readonly]="true"></ion-input>
+      </ion-item>
+      <ion-item >
+        <ion-label floating>무게</ion-label>
+        <ion-input [value]="arduino.weight" [readonly]="true"></ion-input>
+      </ion-item>
+      <ion-item >
+        <ion-label floating>사운드</ion-label>
+        <ion-input [value]="arduino.sound" [readonly]="true"></ion-input>
+      </ion-item> -->
+    </ng-template>
   </div>
-  <ng-template #showArduino>
-    <ion-item class="buttonsBg">
-        <ion-label floating>시리얼 넘버</ion-label>
-        <ion-input [value]="arduino.address" [readonly]="true"></ion-input>
-    </ion-item>
-    <button ion-button block (click)="updateArduino()">기기 수정</button>
-    <button ion-button block (click)="removeArduino()" color="dangerOrigin">기기 삭제</button>
-    <!-- <ion-item >
-      <ion-label floating>모터</ion-label>
-      <ion-input [value]="arduino.motor" [readonly]="true"></ion-input>
-    </ion-item>
-    <ion-item >
-      <ion-label floating>무게</ion-label>
-      <ion-input [value]="arduino.weight" [readonly]="true"></ion-input>
-    </ion-item>
-    <ion-item >
-      <ion-label floating>사운드</ion-label>
-      <ion-input [value]="arduino.sound" [readonly]="true"></ion-input>
-    </ion-item> -->
-  </ng-template>
 </ion-content>

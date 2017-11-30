@@ -27,14 +27,15 @@ export class FoodPage {
   dbSubscription: any;
   message: string;
 
-  constructor( public loadingCtrl: LoadingController, private afDatabase: AngularFireDatabase, private messageService: MessageServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public loadingCtrl: LoadingController, private afDatabase: AngularFireDatabase, private messageService: MessageServiceProvider, public navCtrl: NavController, public navParams: NavParams) {
     // this.dbObservable = this.afDatabase.object(`motor/${this.navParams.data.address}`).snapshotChanges();
     console.log(this.navParams.data.address);
   }
 
   ionViewDidLoad() {
     // this.dbSubscription = this.dbObservable.subscribe((data)=>{this.getChart(data[data.length-1])});
-    if(this.navParams.data.address !== undefined){
+    if(this.navParams.data.address !== undefined && this.navParams.data.address !== null){
+      console.log(this.navParams.data.address+"hel")
       this.isExists = true;
       this.dbObservable = this.afDatabase.list(`nowweight/${this.navParams.data.address}`).valueChanges();
       this.dbSubscription = this.dbObservable.subscribe((data)=>{

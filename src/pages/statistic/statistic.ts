@@ -28,7 +28,7 @@ export class StatisticPage {
   }
 
   ionViewDidLoad() {
-    if(this.navParams.data.address !== undefined || this.navParams.data.address !== null){
+    if(this.navParams.data.address !== undefined && this.navParams.data.address !== null){
       this.isExists = true;
       console.log(this.navParams.data.address);
       this.dbSubscription = this.afDatabase.object(`averageweight/${this.navParams.data.address}`).snapshotChanges().subscribe( async data=>{

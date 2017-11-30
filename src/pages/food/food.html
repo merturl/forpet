@@ -6,8 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar color="primary">
-    <ion-title>Food</ion-title>
+  <ion-navbar color="primarySeceond">
+    <ion-title>섭취량</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,7 +16,7 @@
 <ion-content id="mainColor" padding>
   <div *ngIf="isExists; else showMessage">
     <div id="todayConsumption" style="display: block;"></div>
-    <button ion-button block (click)="refillFood()">사료 보충</button>
+    <button ion-button block  color="primarySeceond" (click)="refillFood()">사료 보충</button>
   </div>
   <ng-template #showMessage>
     <ion-card color="danger">
