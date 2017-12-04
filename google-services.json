@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "399926770516",
+    "firebase_url": "https://forpet-14493.firebaseio.com",
+    "project_id": "forpet-14493",
+    "storage_bucket": "forpet-14493.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399926770516:android:764d2cb7da3280eb",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399926770516-jsa3apo2q6tdropojvesm91kfq7p0u99.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.ionic.starter",
+            "certificate_hash": "34effcc3e2efbb5ce1402eeccd3cd9cf62b0c880"
+          }
+        },
+        {
+          "client_id": "399926770516-umj6hgmrq4jrj3eiavjacdtl9tg0hvae.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUEIk06IAwFNFy48bOfuVe5zuFiqgMMJk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399926770516-umj6hgmrq4jrj3eiavjacdtl9tg0hvae.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

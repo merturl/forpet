@@ -4,6 +4,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App, LoadingController, ToastController } from 'ionic-angular';
 import { AngularFireDatabase } from "angularfire2/database";
 import { LoginPage } from '../login/login';
+import { FCM } from '@ionic-native/fcm';
+
 /**
  * Generated class for the ProfilePage page.
  *
@@ -23,7 +25,7 @@ export class ProfilePage {
   dbSubscription: any;
   loading: any;
 
-  constructor(private toast: ToastController, public loadingCtrl: LoadingController, public app: App, private afDatabase: AngularFireDatabase,private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private fcm: FCM, private toast: ToastController, public loadingCtrl: LoadingController, public app: App, private afDatabase: AngularFireDatabase,private afAuth: AngularFireAuth, public navCtrl: NavController, public navParams: NavParams) {
       this.dbSubscription = this.afDatabase.object(`profile/${this.navParams.data.uid}`).snapshotChanges().subscribe(action => {
         console.log(action.key)
         if(action.payload.val()){
@@ -70,6 +72,7 @@ export class ProfilePage {
 
   signOut(){
     this.dbSubscription.unsubscribe();
+    this.fcm.unsubscribeFromTopic(this.navParams.data.address.replace(/:/g, ''));
     this.afAuth.auth.signOut().then(()=>this.app.getRootNav().setRoot(LoginPage));
   }
 

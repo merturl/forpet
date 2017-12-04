@@ -8,6 +8,7 @@ import firebase from 'firebase';
 import { FIREBASE_CONFIG } from './app.firebase.config';
 import { TabsPage } from '../pages/tabs/tabs';
 
+
 @Component({
   templateUrl: 'app.html'
 })

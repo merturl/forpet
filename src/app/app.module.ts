@@ -14,7 +14,7 @@ import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFireDatabaseModule } from "angularfire2/database";
 import { HttpClientModule } from '@angular/common/http';
 import { GooglePlus } from "@ionic-native/google-plus";
-
+import { FCM } from '@ionic-native/fcm';
 // import { FirebaseObjectObservable  } from "angularfire2/database-deprecated"; 쓰이지 않음
 
 
@@ -63,7 +63,8 @@ import { MessageServiceProvider } from '../providers/message-service/message-ser
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MessageServiceProvider,
-    GooglePlus
+    GooglePlus,
+    FCM
   ]
 })
 export class AppModule {}

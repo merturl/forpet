@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController, AlertController, App } from 'ionic-angular';
 import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import { TabsPage } from '../tabs/tabs';
-
+import { FCM } from '@ionic-native/fcm';
+import { Platform } from 'ionic-angular/platform/platform';
 /**
  * Generated class for the ArduinoPage page.
  *
@@ -23,8 +24,23 @@ export class ArduinoPage {
   dbSubscription: any;
   messageList = [];
 
-  constructor(public app: App, private alertCtrl: AlertController, private toast: ToastController, public loadingCtrl: LoadingController, private afDatabase: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
-   
+  constructor(private alert: AlertController,private platform: Platform, private fcm: FCM, public app: App, private alertCtrl: AlertController, private toast: ToastController, public loadingCtrl: LoadingController, private afDatabase: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams) {
+    
+  }
+  async onNotification(){
+    try{
+      await this.platform.ready();
+
+      this.fcm.onNotification().subscribe(data=>{
+        if(data.wasTapped){this.alert.create({message: data.message})}else{
+          this.alert.create({message: data.message+"for"})
+        }
+        
+      }, error=>{console.log(error)});
+
+    }catch(e){
+      console.log(e);
+    }
   }
 
   ionViewDidLoad() {
@@ -32,6 +48,8 @@ export class ArduinoPage {
       if(action.payload.exists()){
         this.isExists = true;
         this.arduino = action.payload.val();
+        this.fcm.subscribeToTopic(`${action.payload.val().address.replace(/:/g, '')}`);
+        this.onNotification();
       }else{
         this.isExists = false;
       }
@@ -82,6 +100,7 @@ export class ArduinoPage {
     if(this.arduino.address !== undefined && this.arduino.address.length > 0){
       this.afDatabase.object(`arduino/${this.navParams.data.uid}`).set(this.arduino).then(res=>{
         this.toast.create( { message: `아두이노가 저장 되었습니다.`, duration: 1000 } ).present();
+        
       });
       this.app.getRootNav().setRoot(TabsPage);
       console.log(this.arduino.address+"tihs11");
