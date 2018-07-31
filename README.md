@@ -10,5 +10,5 @@ arduino, ionic, nodejs, firebase
 
 # Developer
 허승범 SBHeo https://github.com/SBHeo <br>
-김종현 merturl
+김종현 merturl <br>
 신종호
