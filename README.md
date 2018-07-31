@@ -9,5 +9,5 @@ arduino, ionic, nodejs, firebase
 # Collaborator
 
 # Developer
-허승범
-김종현
+허승범 SBHeo<br>
+김종현 merturl
