@@ -35,7 +35,7 @@
         "cordova-plugin-fcm": "^2.1.2",
         "cordova-plugin-file": "^4.3.3",
         "cordova-plugin-googleplus": "^5.1.1",
-        "cordova-plugin-inappbrowser": "^1.7.1",
+        "cordova-plugin-inappbrowser": "^4.0.0",
         "cordova-plugin-ionic-webview": "^1.1.11",
         "cordova-plugin-splashscreen": "^4.0.3",
         "cordova-plugin-statusbar": "git+https://github.com/apache/cordova-plugin-statusbar.git",
